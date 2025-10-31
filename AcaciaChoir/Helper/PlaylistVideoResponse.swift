@@ -17,6 +17,7 @@ struct PlaylistVideoResponse: Decodable {
             let publishedAt: String
             let thumbnails: Thumbnails
             let resourceId: ResourceId?
+            let videoOwnerChannelTitle: String
             
             struct Thumbnails: Decodable {
                 let medium: Thumbnail?

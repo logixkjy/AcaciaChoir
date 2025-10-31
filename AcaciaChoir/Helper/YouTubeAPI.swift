@@ -50,7 +50,8 @@ extension YouTubeClient: DependencyKey {
                             description: item.snippet.description,
                             thumbnailURL: item.snippet.thumbnails.medium?.url ?? "",
                             publishedAt: ISO8601DateFormatter().date(from: item.snippet.publishedAt),
-                            duration: nil
+                            duration: nil,
+                            videoOwnerChannelTitle: item.snippet.videoOwnerChannelTitle
                         )
                     }
                     

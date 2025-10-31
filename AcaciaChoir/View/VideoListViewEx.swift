@@ -11,10 +11,11 @@ import SwiftUI
 extension VideoListView {
     struct VideoRowView: View {
         let video: YouTubeVideo
+        let isExternal: Bool
         
         var body: some View {
             HStack(alignment: .top, spacing: 12) {
-                ZStack(alignment: .bottomTrailing) {
+                ZStack(alignment: .topLeading) {
                     // 썸네일 이미지
                     AsyncImage(url: URL(string: video.thumbnailURL)) { image in
                         image
@@ -28,9 +29,8 @@ extension VideoListView {
                     .clipped()
                     .cornerRadius(8)
                     
-                    // ⏱ 재생 시간 오버레이
-                    if let duration = video.duration {
-                        Text(duration)
+                    if isExternal {
+                        Text("출처 \(video.videoOwnerChannelTitle)")
                             .font(.caption2.weight(.semibold))
                             .foregroundColor(.white)
                             .padding(.horizontal, 6)
@@ -38,6 +38,23 @@ extension VideoListView {
                             .background(Color.black.opacity(0.7))
                             .cornerRadius(4)
                             .padding(6)
+                    }
+                    // ⏱ 재생 시간 오버레이
+                    if let duration = video.duration {
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text(duration)
+                                    .font(.caption2.weight(.semibold))
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.black.opacity(0.7))
+                                    .cornerRadius(4)
+                                    .padding(6)
+                            }
+                        }
                     }
                 }
                 
@@ -55,10 +72,11 @@ extension VideoListView {
     
     struct VideoGridCard: View {
         let video: YouTubeVideo
+        let isExternal: Bool
         
         var body: some View {
             VStack(alignment: .leading, spacing: 6) {
-                ZStack(alignment: .bottomTrailing) {
+                ZStack(alignment: .topLeading) {
                     let url = video.thumbnailURL
                     AsyncImage(url: URL(string: url)) { phase in
                         switch phase {
@@ -74,16 +92,32 @@ extension VideoListView {
                     }
                     .aspectRatio(16/9, contentMode: .fit)
                     
-                    // ⏱ 재생 시간 오버레이
-                    if let duration = video.duration {
-                        Text(duration)
+                    if isExternal {
+                        Text("출처 \(video.videoOwnerChannelTitle)")
                             .font(.caption2.weight(.semibold))
                             .foregroundColor(.white)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(Color.black.opacity(0.7))
-                            .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
+                            .cornerRadius(4)
                             .padding(6)
+                    }
+                    // ⏱ 재생 시간 오버레이
+                    if let duration = video.duration {
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text(duration)
+                                    .font(.caption2.weight(.semibold))
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.black.opacity(0.7))
+                                    .cornerRadius(4)
+                                    .padding(6)
+                            }
+                        }
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous)) // ZStack에 적용해야 테두리 일괄 클립

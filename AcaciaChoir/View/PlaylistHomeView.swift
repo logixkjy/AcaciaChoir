@@ -120,6 +120,12 @@ struct PlaylistHomeView: View {
                                 }
                             }
                         }
+                        Text("일부 영상은 외부 YouTube 채널의 공개 영상이며, 저작권은 해당 제작자에게 있습니다.")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.vertical, 4)
+                            .padding([.top, .bottom], 8)
                         BannerSlot()
                     }
                 }
@@ -150,7 +156,8 @@ struct PlaylistHomeView: View {
                             }
                         ),
                         isGridLayout: $isGridLayout,
-                        isMain: true
+                        isMain: true,
+                        isExternal: viewStore.selectedPlaylist!.isExternal
                     )
                 }
             }

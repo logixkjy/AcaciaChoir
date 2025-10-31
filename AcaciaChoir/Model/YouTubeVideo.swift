@@ -14,4 +14,5 @@ struct YouTubeVideo: Equatable, Identifiable, Hashable {
     let thumbnailURL: String
     let publishedAt: Date?
     let duration: String?
+    let videoOwnerChannelTitle: String
 }

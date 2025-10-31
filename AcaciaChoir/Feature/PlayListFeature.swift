@@ -21,7 +21,7 @@ struct PlaylistFeature: Reducer {
         var sectionOrder: [String] = ["성가 합창", "합창대회", "크리스마스", "부활절", "기타", "others"]
         
         var validPlaylists: [PlaylistItem] {
-            let excludeGroups = ["NoAdd", "비공개", "삭제됨"]
+            let excludeGroups = ["NoAdd", "noadd", "비공개", "삭제됨"]
             return playlists.filter { !excludeGroups.contains($0.groupKey) }
         }
         

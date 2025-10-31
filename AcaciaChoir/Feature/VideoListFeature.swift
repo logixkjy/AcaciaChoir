@@ -43,7 +43,9 @@ struct VideoListFeature: Reducer {
                             description: video.description,
                             thumbnailURL: video.thumbnailURL,
                             publishedAt: video.publishedAt,
-                            duration: durations[video.id]
+                            duration: durations[video.id],
+                            videoOwnerChannelTitle: video.videoOwnerChannelTitle
+                            
                         )
                     }
 

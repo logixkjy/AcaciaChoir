@@ -21,17 +21,45 @@ struct PlaylistItem: Identifiable, Codable, Equatable, Hashable {
               open == cursor.startIndex,                         // 반드시 맨 앞에서만
               let close = cursor.firstIndex(of: "]") {
             let inner = cursor[cursor.index(after: open)..<close]
-            groups.append(inner.trimmingCharacters(in: .whitespacesAndNewlines).lowercased())
+            if inner.contains(":") {
+                if let group = (inner.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()).components(separatedBy: ":").first {
+                    groups.append(group)
+                }
+            }
             // 다음 토큰으로 이동
             let nextStart = cursor.index(after: close)
             cursor = cursor[nextStart...].drop(while: { $0.isWhitespace })
         }
         return groups
     }
+    // 외부 채널 영상 인지 구분
+    public var parsedIsExternal: [Bool] {
+        var isExternals: [Bool] = []
+        var cursor = description[...]
+        while let open = cursor.firstIndex(of: "["),
+              open == cursor.startIndex,                         // 반드시 맨 앞에서만
+              let close = cursor.firstIndex(of: "]") {
+            let inner = cursor[cursor.index(after: open)..<close]
+            if inner.contains(":") {
+                let arr = (inner.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()).components(separatedBy: ":")
+                if arr.count > 1 {
+                    isExternals.append(arr[1] == "external")
+                }
+            }
+            // 다음 토큰으로 이동
+            let nextStart = cursor.index(after: close)
+            cursor = cursor[nextStart...].drop(while: { $0.isWhitespace })
+        }
+        return isExternals
+    }
     
     // 대표 그룹 키. 없으면 others
     public var groupKey: String {
         parsedGroups.first ?? "others"
+    }
+    
+    public var isExternal: Bool {
+        parsedIsExternal.first ?? true
     }
     
     // 말머리 제거된 설명

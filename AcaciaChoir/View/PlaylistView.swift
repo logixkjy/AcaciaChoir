@@ -45,6 +45,12 @@ struct PlaylistView: View {
                         } else if let error = viewStore.errorMessage {
                             Text(error).foregroundColor(.red)
                         } else {
+                            Text("※ 본 목록에는 합창단 자체 영상과 외부 채널의 공개 영상이 함께 포함될 수 있습니다.\n외부 영상의 저작권은 원 제작자에게 있습니다.")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                                .multilineTextAlignment(.center)
+
                             if isGridLayout {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 16) {
@@ -163,7 +169,8 @@ struct PlaylistView: View {
                             initialState: VideoListFeature.State(playlistItem: viewStore.selectedPlaylist!),
                             reducer: { VideoListFeature() }
                         ),
-                        isGridLayout: $isGridLayout
+                        isGridLayout: $isGridLayout,
+                        isExternal: viewStore.selectedPlaylist!.isExternal
                     )
                 }
                 .overlay(

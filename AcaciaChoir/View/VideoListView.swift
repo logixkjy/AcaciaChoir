@@ -19,6 +19,7 @@ struct VideoListView: View {
     
     @State private var isPresented = false
     var isMain = false
+    var isExternal = false
     @Binding private var isGridLayout: Bool
     @State private var selectedVideoId: StringID?
     
@@ -31,11 +32,13 @@ struct VideoListView: View {
     init(
         store: StoreOf<VideoListFeature>,
         isGridLayout: Binding<Bool>,
-        isMain: Bool = false
+        isMain: Bool = false,
+        isExternal: Bool = false
     ) {
         _store = StateObject(wrappedValue: store)
         self._isGridLayout = isGridLayout
         self.isMain = isMain
+        self.isExternal = isExternal
     }
     
     var body: some View {
@@ -54,10 +57,13 @@ struct VideoListView: View {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 16) {
                                         ForEach(viewStore.videos) { video in
-                                            VideoGridCard(video: video)
-                                                .onTapGesture {
-                                                    selectedVideoId = StringID(id: video.id)
-                                                }
+                                            VideoGridCard(
+                                                video: video,
+                                                isExternal: isExternal
+                                            )
+                                            .onTapGesture {
+                                                selectedVideoId = StringID(id: video.id)
+                                            }
                                         }
                                     }
                                     .padding(.horizontal, 16)
@@ -67,16 +73,18 @@ struct VideoListView: View {
                             } else {
                                 List {
                                     ForEach(viewStore.videos) { video in
-                                        VideoRowView(video: video)
-                                            .onTapGesture {
-                                                selectedVideoId = StringID(id: video.id)
-                                            }
+                                        VideoRowView(
+                                            video: video,
+                                            isExternal: isExternal
+                                        )
+                                        .onTapGesture {
+                                            selectedVideoId = StringID(id: video.id)
+                                        }
                                     }
                                 }
                                 .listStyle(.plain)
                             }
                         }
-                        BannerSlot()
                     }
                 }
                 .navigationBarBackButtonHidden(true)
@@ -117,7 +125,8 @@ struct VideoListView: View {
                 .sheet(item: $selectedVideoId) { id in
                     if let selected = viewStore.videos.first(where: { $0.id == id.id }) {
                         VideoDetailView(
-                            video: selected
+                            video: selected,
+                            isExternal: isExternal
                         )
                         .presentationDetents([.fraction(1.0)])
                         .presentationDragIndicator(.visible) // 위쪽 드래그바 표시

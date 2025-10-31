@@ -17,9 +17,11 @@ import ComposableArchitecture
 
 struct VideoDetailView: View {
     let video: YouTubeVideo
+    var isExternal = false
     
-    init(video: YouTubeVideo) {
+    init(video: YouTubeVideo, isExternal: Bool) {
         self.video = video
+        self.isExternal = isExternal
     }
     
     @Environment(\.dismiss) private var dismiss
@@ -56,6 +58,14 @@ struct VideoDetailView: View {
                                     Text(video.title)
                                         .font(.title2)
                                         .bold()
+                                    
+                                    if isExternal {
+                                        Text("이 영상의 저작권은 해당 제작자에게 있으며, YouTube 공개 영상으로 제공됩니다.")
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.bottom, 8)
+                                    }
                                     
                                     Text(video.description)
                                         .font(.body)
