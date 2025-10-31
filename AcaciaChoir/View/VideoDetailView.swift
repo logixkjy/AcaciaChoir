@@ -79,6 +79,7 @@ struct VideoDetailView: View {
                                 .padding()
                             }
                         }
+                        BannerSlot()
                     }
                 }
             }

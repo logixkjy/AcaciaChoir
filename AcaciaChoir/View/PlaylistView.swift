@@ -123,6 +123,7 @@ struct PlaylistView: View {
                             }
                             
                         }
+                        BannerSlot()
                     }
                 }
                 .navigationTitle(group.title)

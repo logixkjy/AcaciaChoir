@@ -76,6 +76,7 @@ struct VideoListView: View {
                                 .listStyle(.plain)
                             }
                         }
+                        BannerSlot()
                     }
                 }
                 .navigationBarBackButtonHidden(true)

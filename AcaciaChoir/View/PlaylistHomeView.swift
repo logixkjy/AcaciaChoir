@@ -65,7 +65,7 @@ struct PlaylistHomeView: View {
                                 Spacer()
                             } else {
                                 if !searchText.isEmpty {
-                                    List(filteredPlaylists(from: viewStore.playlists)) { playlist in
+                                    List(filteredPlaylists(from: viewStore.validPlaylists)) { playlist in
                                         HStack(spacing: 12) {
                                             if let thumbnailURL = playlist.thumbnailURL {
                                                 AsyncImage(url: URL(string:  thumbnailURL)) { image in
@@ -120,6 +120,7 @@ struct PlaylistHomeView: View {
                                 }
                             }
                         }
+                        BannerSlot()
                     }
                 }
                 .toolbar {

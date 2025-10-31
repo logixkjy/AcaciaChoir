@@ -10,16 +10,17 @@ import ComposableArchitecture
 
 @main
 struct AcaciaChoirApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @Environment(\.scenePhase) private var scenePhase
+    
     var body: some Scene {
         WindowGroup {
-            PlaylistHomeView(
-                store: Store(
-                    initialState: PlaylistFeature.State(),
-                    reducer: {
-                        PlaylistFeature()
-                    }
-                )
-            )
+            RootView()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                AttAuthentication.requestIfNeeded()
+            }
         }
     }
 }

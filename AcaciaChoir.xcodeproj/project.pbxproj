@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C7AFFC32EB3A28B00E95FD5 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7C7AFFC22EB3A28B00E95FD5 /* GoogleMobileAds */; };
 		7C98B6B92EB107210054B585 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7C98B6B82EB107210054B585 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C7AFFC32EB3A28B00E95FD5 /* GoogleMobileAds in Frameworks */,
 				7C98B6B92EB107210054B585 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +86,7 @@
 			name = AcaciaChoir;
 			packageProductDependencies = (
 				7C98B6B82EB107210054B585 /* ComposableArchitecture */,
+				7C7AFFC22EB3A28B00E95FD5 /* GoogleMobileAds */,
 			);
 			productName = AcaciaChoir;
 			productReference = 7C98B6752EB104020054B585 /* AcaciaChoir.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				7C98B6B72EB107210054B585 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				7C7AFFC12EB3A28B00E95FD5 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7C98B6762EB104020054B585 /* Products */;
@@ -286,13 +290,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AcaciaChoir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "아카시아합창단";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "개인에게 최적화된 광고를 제공하기 위해 사용자의 광고 활동 정보를 수집합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,13 +332,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AcaciaChoir/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "아카시아합창단";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "개인에게 최적화된 광고를 제공하기 위해 사용자의 광고 활동 정보를 수집합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -376,6 +384,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		7C7AFFC12EB3A28B00E95FD5 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
 		7C98B6B72EB107210054B585 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -387,6 +403,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7C7AFFC22EB3A28B00E95FD5 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C7AFFC12EB3A28B00E95FD5 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
 		7C98B6B82EB107210054B585 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7C98B6B72EB107210054B585 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
