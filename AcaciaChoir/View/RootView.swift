@@ -10,6 +10,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
+    let store: StoreOf<PlaylistFeature>
     @State private var isSplash: Bool = true
     
     @Environment(\.scenePhase) private var scenePhase
@@ -20,29 +21,22 @@ struct RootView: View {
                 SplashView(isSplash: $isSplash)
                     .preferredColorScheme(.dark)
             } else {
-                PlaylistHomeView(
-                    store: Store(
-                        initialState: PlaylistFeature.State(),
-                        reducer: {
-                            PlaylistFeature()
+                PlaylistHomeView(store: store)
+                    .onChange(of: scenePhase) { _, newPhase in
+                        switch newPhase {
+                        case .active:
+                            AppOpenAdManager.shared.showAdIfAvailable()
+                        case .background:
+                            Task {
+                                await AppOpenAdManager.shared.loadAd()
+                            }
+                            break
+                        case .inactive:
+                            break
+                        @unknown default:
+                            break
                         }
-                    )
-                )
-                .onChange(of: scenePhase) { newPhase in
-                    switch newPhase {
-                    case .active:
-                        AppOpenAdManager.shared.showAdIfAvailable()
-                    case .background:
-                        Task {
-                            await AppOpenAdManager.shared.loadAd()
-                        }
-                        break
-                    case .inactive:
-                        break
-                    @unknown default:
-                        break
                     }
-                }
             }
         }
     }

@@ -15,7 +15,14 @@ struct AcaciaChoirApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(
+                store: Store(
+                    initialState: PlaylistFeature.State(),
+                    reducer: {
+                        PlaylistFeature()
+                    }
+                )
+            )
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {

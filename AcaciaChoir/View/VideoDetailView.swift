@@ -63,7 +63,7 @@ struct VideoDetailView: View {
                                         Text("이 영상의 저작권은 해당 제작자에게 있으며, YouTube 공개 영상으로 제공됩니다.")
                                             .font(.caption2)
                                             .foregroundColor(.secondary)
-                                            .multilineTextAlignment(.center)
+//                                            .multilineTextAlignment(.center)
                                             .padding(.bottom, 8)
                                     }
                                     
