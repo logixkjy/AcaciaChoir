@@ -157,7 +157,8 @@ struct PlaylistHomeView: View {
                         ),
                         isGridLayout: $isGridLayout,
                         isMain: true,
-                        isExternal: viewStore.selectedPlaylist!.isExternal
+                        isExternal: viewStore.selectedPlaylist!.isExternal,
+                        isExternalApp: viewStore.selectedPlaylist!.isExternalApp
                     )
                 }
             }

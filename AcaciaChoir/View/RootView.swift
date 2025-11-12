@@ -22,21 +22,21 @@ struct RootView: View {
                     .preferredColorScheme(.dark)
             } else {
                 PlaylistHomeView(store: store)
-                    .onChange(of: scenePhase) { _, newPhase in
-                        switch newPhase {
-                        case .active:
-                            AppOpenAdManager.shared.showAdIfAvailable()
-                        case .background:
-                            Task {
-                                await AppOpenAdManager.shared.loadAd()
-                            }
-                            break
-                        case .inactive:
-                            break
-                        @unknown default:
-                            break
-                        }
-                    }
+//                    .onChange(of: scenePhase) { _, newPhase in
+//                        switch newPhase {
+//                        case .active:
+//                            AppOpenAdManager.shared.showAdIfAvailable()
+//                        case .background:
+//                            Task {
+//                                await AppOpenAdManager.shared.loadAd()
+//                            }
+//                            break
+//                        case .inactive:
+//                            break
+//                        @unknown default:
+//                            break
+//                        }
+//                    }
             }
         }
     }

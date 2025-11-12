@@ -16,19 +16,16 @@ extension VideoListView {
         var body: some View {
             HStack(alignment: .top, spacing: 12) {
                 ZStack(alignment: .topLeading) {
-                    // 썸네일 이미지
-                    AsyncImage(url: URL(string: video.thumbnailURL)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(16/9, contentMode: .fill)
-                    } placeholder: {
-                        Rectangle()
-                            .fill(Color.gray.opacity(0.2))
+                    if let url = URL(string: video.thumbnailURL) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(16/9, contentMode: .fill)
+                        } placeholder: {
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.2))
+                        }
                     }
-                    .frame(width: 160, height: 90)
-                    .clipped()
-                    .cornerRadius(8)
-                    
                     if isExternal {
                         Text("출처 \(video.videoOwnerChannelTitle)")
                             .font(.caption2.weight(.semibold))
@@ -39,7 +36,6 @@ extension VideoListView {
                             .cornerRadius(4)
                             .padding(6)
                     }
-                    // ⏱ 재생 시간 오버레이
                     if let duration = video.duration {
                         VStack {
                             Spacer()
@@ -57,11 +53,15 @@ extension VideoListView {
                         }
                     }
                 }
+                .frame(width: 160, height: 90)
+                .clipped()
+                .cornerRadius(8)
                 
                 VStack(alignment: .leading, spacing: 6) {
                     Text(video.title)
                         .font(.headline)
                         .lineLimit(2)
+                        .foregroundColor(.white)
                 }
                 
                 Spacer()

@@ -16,10 +16,12 @@ struct VideoListView: View {
     @StateObject private var store: StoreOf<VideoListFeature>
     
     @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.openURL) private var openURL
     
     @State private var isPresented = false
     var isMain = false
     var isExternal = false
+    var isExternalApp = false
     @Binding private var isGridLayout: Bool
     @State private var selectedVideoId: StringID?
     
@@ -33,12 +35,14 @@ struct VideoListView: View {
         store: StoreOf<VideoListFeature>,
         isGridLayout: Binding<Bool>,
         isMain: Bool = false,
-        isExternal: Bool = false
+        isExternal: Bool = false,
+        isExternalApp: Bool = false
     ) {
         _store = StateObject(wrappedValue: store)
         self._isGridLayout = isGridLayout
         self.isMain = isMain
         self.isExternal = isExternal
+        self.isExternalApp = isExternalApp
     }
     
     var body: some View {
@@ -53,6 +57,14 @@ struct VideoListView: View {
                         } else if let error = viewStore.errorMessage {
                             Text(error).foregroundColor(.red)
                         } else {
+                            if isExternalApp {
+                                Text("※ 본 목록의 영상은 제작자의 정책에 따라 YouTube 앱에서 재생됩니다.")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal)
+                                    .multilineTextAlignment(.center)
+                            }
+                            
                             if isGridLayout {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 16) {
@@ -62,7 +74,11 @@ struct VideoListView: View {
                                                 isExternal: isExternal
                                             )
                                             .onTapGesture {
-                                                selectedVideoId = StringID(id: video.id)
+                                                if isExternalApp {
+                                                    openURL(YouTubeURL(for: video.id))
+                                                } else {
+                                                    selectedVideoId = StringID(id: video.id)
+                                                }
                                             }
                                         }
                                     }
@@ -78,7 +94,11 @@ struct VideoListView: View {
                                             isExternal: isExternal
                                         )
                                         .onTapGesture {
-                                            selectedVideoId = StringID(id: video.id)
+                                            if isExternalApp {
+                                                openURL(YouTubeURL(for: video.id))
+                                            } else {
+                                                selectedVideoId = StringID(id: video.id)
+                                            }
                                         }
                                     }
                                 }
@@ -106,6 +126,15 @@ struct VideoListView: View {
                     }
                     
                     // 오른쪽: 레이아웃 전환 버튼
+                    ToolbarItem(placement: .topBarTrailing) {
+                        let shareURL = playlistURL(for: viewStore.playlistItem?.id ?? "")
+                        let title = viewStore.playlistItem?.title ?? "재생목록"
+
+                        ShareLink(item: shareURL, subject: Text(title), message: Text("\(title)\n\(shareURL.absoluteString)")) {
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                    }
+                    
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
                             withAnimation(.easeInOut) {
@@ -154,4 +183,13 @@ struct VideoListView: View {
             }
         }
     }
+    
+    func playlistURL(for id: String) -> URL {
+        URL(string: "https://www.youtube.com/playlist?list=\(id)")!
+    }
+    
+    func YouTubeURL(for id: String) -> URL {
+        URL(string: "https://www.youtube.com/watch?v=\(id)")!
+    }
+
 }

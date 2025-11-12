@@ -104,7 +104,7 @@ struct PlaylistView: View {
                                                         .fill(Color.gray.opacity(0.2))
                                                 }
                                             }
-                                            .frame(width: 133, height: 100) // ✅ 고정
+                                            .frame(width: 160, height: 90)
                                             .clipped()
                                             .cornerRadius(8)
                                         }
@@ -170,7 +170,8 @@ struct PlaylistView: View {
                             reducer: { VideoListFeature() }
                         ),
                         isGridLayout: $isGridLayout,
-                        isExternal: viewStore.selectedPlaylist!.isExternal
+                        isExternal: viewStore.selectedPlaylist!.isExternal,
+                        isExternalApp: viewStore.selectedPlaylist!.isExternalApp
                     )
                 }
                 .overlay(

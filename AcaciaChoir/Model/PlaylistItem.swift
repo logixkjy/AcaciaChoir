@@ -33,8 +33,8 @@ struct PlaylistItem: Identifiable, Codable, Equatable, Hashable {
         return groups
     }
     // 외부 채널 영상 인지 구분
-    public var parsedIsExternal: [Bool] {
-        var isExternals: [Bool] = []
+    public var parsedIsExternalTypes: [String] {
+        var types: [String] = []
         var cursor = description[...]
         while let open = cursor.firstIndex(of: "["),
               open == cursor.startIndex,                         // 반드시 맨 앞에서만
@@ -43,14 +43,14 @@ struct PlaylistItem: Identifiable, Codable, Equatable, Hashable {
             if inner.contains(":") {
                 let arr = (inner.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()).components(separatedBy: ":")
                 if arr.count > 1 {
-                    isExternals.append(arr[1] == "external")
+                    types.append(arr[1])
                 }
             }
             // 다음 토큰으로 이동
             let nextStart = cursor.index(after: close)
             cursor = cursor[nextStart...].drop(while: { $0.isWhitespace })
         }
-        return isExternals
+        return types
     }
     
     // 대표 그룹 키. 없으면 others
@@ -59,7 +59,17 @@ struct PlaylistItem: Identifiable, Codable, Equatable, Hashable {
     }
     
     public var isExternal: Bool {
-        parsedIsExternal.first ?? true
+        guard let firstType = parsedIsExternalTypes.first else {
+            return true
+        }
+        return firstType == "external" || firstType == "externalapp"
+    }
+    
+    public var isExternalApp: Bool {
+        guard let firstType = parsedIsExternalTypes.first else {
+            return false
+        }
+        return firstType == "externalapp"
     }
     
     // 말머리 제거된 설명
