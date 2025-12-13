@@ -130,7 +130,7 @@ struct VideoListView: View {
                         let shareURL = playlistURL(for: viewStore.playlistItem?.id ?? "")
                         let title = viewStore.playlistItem?.title ?? "재생목록"
 
-                        ShareLink(item: shareURL, subject: Text(title), message: Text("\(title)\n\(shareURL.absoluteString)")) {
+                        ShareLink(item: shareURL, subject: Text(title), message: nil) {
                             Image(systemName: "square.and.arrow.up")
                         }
                     }
